@@ -11,7 +11,7 @@ def loader(link, output='os.getcwd'):
     :return: path to new file
     """ 
     response = requests.get(link)
-    data = response.content
+    data = response.text
     file_name = modify_file_name(link)
     if output == 'os.getcwd':
         directory = os.getcwd()
