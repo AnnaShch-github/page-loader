@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from page_loader import loader
+from page_loader.loader import loader
+
 from page_loader.parsing import parse_cli_arguments
 
 

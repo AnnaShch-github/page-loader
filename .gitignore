@@ -5,3 +5,8 @@ page_loader/scripts/__pycache__/
 .venv/
 tests/__pycache__/
 dist/
+bin/
+lib/
+project3/
+pyvenv.cfg
+
