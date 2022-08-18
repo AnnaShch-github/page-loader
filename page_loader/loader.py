@@ -2,7 +2,7 @@ import requests
 import os
 
 from bs4 import BeautifulSoup
-#from progress.bar import ShadyBar
+from progress.bar import Bar
 
 from page_loader.get_content import get_page, get_files
 from page_loader.links_for_downloading import links_for_dowloads
@@ -33,13 +33,16 @@ def loader(url, output='os.getcwd'):
     else:
         directory = output
     folder_for_files = f'{directory}/{page_name}_files'
-    os.mkdir(folder_for_files)
-    logger.debug(f'The directory for files from {url} is created')
+    if not os.path.isdir(folder_for_files):
+        os.mkdir(folder_for_files)
+        logger.info(f'The directory for files from {url} is created')
+    else:
+        logger.info(f'The directory for files from {url} exists')
     filepath = os.path.join(directory, page_name + '.html')
     soup = BeautifulSoup(data, 'html.parser')
     links = links_for_dowloads(soup, url)
-    #bar = ShadyBar('Processing')
-    for file_link, object, atr in links:
+    bar = Bar('Processing', max=len(links), suffix='%(percent)d%%\n\n')
+    for file_link, tag, atr in links:
         image_bytes = get_files(url, file_link)
         if image_bytes is None:
             logger.debug('There is no data to download')
@@ -47,8 +50,8 @@ def loader(url, output='os.getcwd'):
             modified_file_name = modify_file_name(file_link)
             file_name = f'{folder_for_files}/{modified_file_name}'
             write_to_file(file_name, image_bytes)
-            object[atr] = file_name
-        #bar.next()
+            tag[atr] = file_name
+        bar.next()
     soup.prettify()
     content = str(soup)
     write_to_file(filepath, content)
