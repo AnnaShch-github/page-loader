@@ -1,12 +1,12 @@
 from urllib.parse import urlparse
 
-from bs4 import BeautifulSoup
 
-DICTIONARY= {
+DICTIONARY = {
     'img': 'src',
     'link': 'href',
     'script': 'src'
 }
+
 
 def links_for_dowloads(soup, url):
     list_of_links = []
@@ -21,12 +21,13 @@ def links_for_dowloads(soup, url):
                 continue
     return list_of_links
 
+
 def same_domain(url, link):
     if not link:
         return False
     link_netloc = urlparse(link).netloc
-    url_neloc = urlparse(url).netloc
-    if link_netloc == url_neloc or not link_netloc:
+    url_netloc = urlparse(url).netloc
+    if link_netloc == url_netloc or not link_netloc:
         return True
     else:
         return False
