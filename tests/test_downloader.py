@@ -2,34 +2,56 @@ import os
 import tempfile
 
 import pytest
-import requests_mock
+import requests
+
 
 from page_loader import loader
 from page_loader.reader import read
 
 URL = 'https://ru.hexlet.io/courses'
-TEST_FOLDER = os.path.dirname(__file__)
-PATH_ORIGINAL = os.path.join(TEST_FOLDER, 'fixtures')
-URL_IMAGE = 'https://ru.hexlet.io/courses'
-CHANGED = 'tests/fixtures/changed.html'
-HTML_FILE_NAME = os.path.join(PATH_ORIGINAL, 'page-loader-hexlet-repl-co.html')
-ORIGINAL = 'tests/fixtures/original.html'
-JS_FILE = os.path.join(TEST_FOLDER,'fixtures', 'page-loader-hexlet-repl-co_files', 'page-loader-hexlet-repl-co-script.js')
-URL_JS = 'https://ru.hexlet.io/coursespage-loader-hexlet-repl-co_files/page-loader-hexlet-repl-co-script.js'
-DOWNLOADS_DIR = os.path.join(TEST_FOLDER, 'fixtures')
-CHANGED_HTML_FILE_NAME = 'page-loader-hexlet-repl-co.html'
-CREATED_HTML_FILE = os.path.join(DOWNLOADS_DIR, CHANGED_HTML_FILE_NAME)
-CREATED_DIR_NAME = 'page-loader-hexlet-repl-co_files'
-JS_NAME = 'page-loader-hexlet-repl-co-script.js'
-CREATED_JS = os.path.join(CREATED_DIR_NAME, JS_NAME)
-EXPECTED_JS = os.path.join(DOWNLOADS_DIR, CREATED_JS)
+URL_CSS = 'https://ru.hexlet.io/courses/assets/application.css'
+URL_PNG = 'https://ru.hexlet.io/courses/assets/professions/nodejs.png'
+URL_HTML = 'https://ru.hexlet.io/courses/courses'
+URL_JS = 'https://ru.hexlet.io/courses/script.js'
 
 
-@pytest.mark.parametrize('original_file, changed', [(CHANGED_HTML_FILE_NAME, CREATED_HTML_FILE),  (CREATED_JS, EXPECTED_JS)])
-def test_download(original_file, changed, requests_mock):
-    requests_mock.get(URL, text=read(HTML_FILE_NAME))
-    requests_mock.get(URL_JS, text=read(JS_FILE))
+CREATED_JS = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.js'
+EXPECTED_JS = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.js'
+CREATED_HTML = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.html'
+EXPECTED_HTML = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.html'
+CREATED_PNG = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.png'
+EXPECTED_PNG = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.png'
+CREATED_CSS = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.css'
+EXPECTED_CSS = '/home/anna/python-project-lvl3/tests/fixtures/files/fixture.css'
+CHANGED_PAGE = '/home/anna/python-project-lvl3/tests/fixtures/changed.html'
+CREATED_PAGE = '/home/anna/python-project-lvl3/tests/fixtures/original.html'
+CREATED_DIR = 'ru-hexlet-io-courses_files'
+
+
+@pytest.mark.parametrize('new_file, changed', [(CHANGED_PAGE, CREATED_PAGE),
+                                               (CREATED_CSS, EXPECTED_CSS),
+                                               (CREATED_PNG, EXPECTED_PNG),
+                                               (CREATED_HTML, EXPECTED_HTML),
+                                               (CREATED_JS, EXPECTED_JS)])
+def test_download(new_file, changed, requests_mock):
+    requests_mock.get(URL, content=read(CREATED_PAGE))
+    requests_mock.get(URL_CSS, content=read(CREATED_CSS))
+    requests_mock.get(URL_PNG, content=read(CREATED_PNG))
+    requests_mock.get(URL_HTML, content=read(CREATED_HTML))
+    requests_mock.get(URL_JS, content=read(CREATED_JS))
     with tempfile.TemporaryDirectory() as temp:
         result_path = loader(URL, temp)
-        assert read(result_path) == read(changed)
+        assert read(result_path) == read(CHANGED_PAGE)
         assert os.path.exists(result_path)
+        assert len(os.listdir(os.path.join(temp, CREATED_DIR))) == 4
+
+
+@pytest.mark.parametrize('connection_error_excepted', [
+    requests.HTTPError, requests.ConnectionError,
+    requests.URLRequired, requests.TooManyRedirects, requests.Timeout
+])
+def test_download_exceptions(connection_error_excepted, requests_mock):
+    with pytest.raises(connection_error_excepted):
+        requests_mock.get(URL, exc=connection_error_excepted)
+        with tempfile.TemporaryDirectory() as temp:
+            loader(URL, temp)

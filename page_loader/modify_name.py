@@ -26,3 +26,12 @@ def modify_file_name(link):
     fourth_step = re.sub(r'[^0-9a-zA-Z]', r'-', second_step)
     file_name = f'{fourth_step}{third_step}'
     return file_name
+
+
+def change_name_for_file(file_name):
+    first_step = '/'.join(file_name.split('/')[-2:])
+    second_step = os.path.splitext(first_step)[0]
+    third_step = os.path.splitext(first_step)[1]
+    fourth_step = re.sub(r'[^0-9a-zA-Z]/', r'-', second_step)
+    name_for_file = f'{fourth_step}{third_step}'
+    return name_for_file

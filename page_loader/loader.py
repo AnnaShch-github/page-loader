@@ -1,4 +1,3 @@
-import requests
 import os
 
 from bs4 import BeautifulSoup
@@ -7,15 +6,9 @@ from progress.bar import Bar
 from page_loader.get_content import get_page, get_files
 from page_loader.links_for_downloading import links_for_dowloads
 from page_loader.logger import logger
-from page_loader.modify_name import modify_page_name, modify_file_name
+from page_loader.modify_name import modify_page_name, modify_file_name, \
+    change_name_for_file
 from page_loader.write_to_file import write_to_file
-
-
-DICTIONARY = {
-    'img': 'src',
-    'link': 'href',
-    'script': 'src'
-}
 
 
 def loader(url, output='os.getcwd'):
@@ -43,14 +36,16 @@ def loader(url, output='os.getcwd'):
     links = links_for_dowloads(soup, url)
     bar = Bar('Processing', max=len(links), suffix='%(percent)d%%\n\n')
     for file_link, tag, atr in links:
-        image_bytes = get_files(url, file_link)
+        link_for_file = f'{url}{file_link}'
+        image_bytes = get_files(link_for_file)
         if image_bytes is None:
             logger.debug('There is no data to download')
         else:
-            modified_file_name = modify_file_name(file_link)
-            file_name = f'{folder_for_files}/{modified_file_name}'
+            modified_file_name = modify_file_name(link_for_file)
+            file_name = os.path.join(folder_for_files, modified_file_name)
             write_to_file(file_name, image_bytes)
-            tag[atr] = file_name
+            name_for_file = change_name_for_file(file_name)
+            tag[atr] = name_for_file
         bar.next()
     soup.prettify()
     content = str(soup)

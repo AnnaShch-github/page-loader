@@ -27,8 +27,7 @@ def get_page(url):
         return data
 
 
-def get_files(url, file_link):
-    link_for_file = f'{url}{file_link}'
+def get_files(link_for_file):
     try:
         response = requests.get(link_for_file)
         response.raise_for_status()
