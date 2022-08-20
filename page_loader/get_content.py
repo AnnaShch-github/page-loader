@@ -11,16 +11,16 @@ def get_page(url):
         logger.error('An HTTP error occurred.')
         raise requests.HTTPError('An HTTP error occurred.')
     except requests.ConnectionError:
-        logger.exception('A Connection error occurred.')
+        logger.error('A Connection error occurred.')
         raise requests.ConnectionError('A Connection error occurred.')
     except requests.URLRequired:
-        logger.exception('A valid URL is required to make a request')
+        logger.error('A valid URL is required to make a request')
         raise requests.URLRequired('A valid URL is required to make a request')
     except requests.TooManyRedirects:
-        logger.exception('Too many redirects.')
+        logger.error('Too many redirects.')
         raise requests.TooManyRedirects('Too many redirects.')
     except requests.Timeout:
-        logger.exception('The request timed out.')
+        logger.error('The request timed out.')
         raise requests.Timeout('The request timed out.')
     else:
         data = response.content
