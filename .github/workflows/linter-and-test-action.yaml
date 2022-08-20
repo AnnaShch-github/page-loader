@@ -51,7 +51,7 @@ jobs:
         run: |
           pip install poetry
           make install
-      - uses: ambulation/codeclimate-action@v2.7.4
+      - uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.TEST_COVERAGE_ID }}
         with:
