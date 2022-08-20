@@ -9,4 +9,5 @@ bin/
 lib/
 project3/
 pyvenv.cfg
+.coverage
 

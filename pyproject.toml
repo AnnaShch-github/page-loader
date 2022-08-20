@@ -18,6 +18,7 @@ requests = "^2.28.1"
 beautifulsoup4 = "^4.11.1"
 requests-mock = "^1.9.3"
 progress = "^1.6"
+pytest-cov = "^3.0.0"
 
 [tool.poetry.scripts]
 page-loader = "page_loader.scripts.page_loader:download"
