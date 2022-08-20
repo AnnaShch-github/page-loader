@@ -5,7 +5,7 @@ import pytest
 import requests
 
 
-from page_loader import loader
+from page_loader import download
 from page_loader.reader import read
 
 URL = 'https://ru.hexlet.io/courses'
@@ -40,7 +40,7 @@ def test_download(new_file, changed, requests_mock):
     requests_mock.get(URL_HTML, content=read(CREATED_HTML))
     requests_mock.get(URL_JS, content=read(CREATED_JS))
     with tempfile.TemporaryDirectory() as temp:
-        result_path = loader(URL, temp)
+        result_path = download(URL, temp)
         assert read(result_path) == read(CHANGED_PAGE)
         assert os.path.exists(result_path)
         assert len(os.listdir(os.path.join(temp, CREATED_DIR))) == 4
@@ -54,4 +54,4 @@ def test_download_exceptions(connection_error_excepted, requests_mock):
     with pytest.raises(connection_error_excepted):
         requests_mock.get(URL, exc=connection_error_excepted)
         with tempfile.TemporaryDirectory() as temp:
-            loader(URL, temp)
+            download(URL, temp)

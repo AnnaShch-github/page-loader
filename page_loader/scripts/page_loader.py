@@ -3,16 +3,16 @@ import sys
 
 import requests
 
-from page_loader.loader import loader
+from page_loader.loader import download
 
 from page_loader.parsing import parse_cli_arguments
 
 
-def download():
+def main():
     # The main function of tha package
     try:
         args = parse_cli_arguments()
-        print(loader(args.link, args.output))
+        print(download(args.link, args.output))
     except requests.HTTPError:
         sys.exit(1)
     except requests.ConnectionError:
@@ -26,4 +26,4 @@ def download():
 
 
 if __name__ == '__main__':
-    download()
+    main()

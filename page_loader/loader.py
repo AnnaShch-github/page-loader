@@ -11,7 +11,7 @@ from page_loader.modify_name import modify_page_name, modify_file_name, \
 from page_loader.write_to_file import write_to_file
 
 
-def loader(url, output='os.getcwd'):
+def download(url, output='os.getcwd'):
     """
     Function loading a page from the link
     :param url: link to the website
@@ -39,7 +39,7 @@ def loader(url, output='os.getcwd'):
         link_for_file = f'{url}{file_link}'
         image_bytes = get_files(link_for_file)
         if image_bytes is None:
-            logger.debug('There is no data to download')
+            logger.debug('There is no data to main')
         else:
             modified_file_name = modify_file_name(link_for_file)
             file_name = os.path.join(folder_for_files, modified_file_name)
