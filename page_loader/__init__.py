@@ -1,5 +1,7 @@
-from page_loader.loader import loader
+from page_loader.scripts.page_loader import download
 
 __all__ = [
-    loader
+    download
 ]
+
+
