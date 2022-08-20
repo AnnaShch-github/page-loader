@@ -10,4 +10,5 @@ lib/
 project3/
 pyvenv.cfg
 .coverage
+coverage.xml
 
