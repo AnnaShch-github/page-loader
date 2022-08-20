@@ -18,6 +18,8 @@ jobs:
         run: |
           pip install poetry
           make install
+      - name: make test
+        run: make test
   linter:
     runs-on: ubuntu-latest
     strategy:
@@ -51,7 +53,7 @@ jobs:
         run: |
           pip install poetry
           make install
-      - uses: paambaati/codeclimate-action@v3.0.0
+      - uses: paambaati/codeclimate-action@v2.7.4
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.TEST_COVERAGE_ID }}
         with:
