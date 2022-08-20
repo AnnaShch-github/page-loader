@@ -8,8 +8,8 @@ def get_page(url):
         response = requests.get(url)
         response.raise_for_status()
     except requests.HTTPError:
-        logger.exception('An HTTP error occurred.')
-        raise requests.HTTPError('An HTTP error occurred.')
+        logger.error('An HTTP error occurred.2')
+        raise requests.HTTPError('An HTTP error occurred.3')
     except requests.ConnectionError:
         logger.exception('A Connection error occurred.')
         raise requests.ConnectionError('A Connection error occurred.')
