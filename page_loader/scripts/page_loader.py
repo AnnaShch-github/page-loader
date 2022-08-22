@@ -4,6 +4,7 @@ import sys
 import requests
 
 from page_loader.loader import download
+from page_loader.logger import logger
 
 from page_loader.parsing import parse_cli_arguments
 
@@ -22,6 +23,12 @@ def main():
     except requests.TooManyRedirects:
         sys.exit(1)
     except requests.Timeout:
+        sys.exit(1)
+    except FileNotFoundError:
+        logger.error('The system cannot find the path')
+        sys.exit(1)
+    except PermissionError:
+        logger.error("Unfortunately, you don't have the permission")
         sys.exit(1)
 
 

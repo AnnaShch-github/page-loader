@@ -27,8 +27,7 @@ def download(url, output='os.getcwd'):
         directory = output
     folder_for_files = f'{directory}/{page_name}_files'
     if not os.path.isdir(folder_for_files):
-        logger.info('Создаю папку под файлы')
-        os.makedirs(folder_for_files)
+        os.mkdir(folder_for_files)
         logger.info(f'The directory for files from {url} is created')
     else:
         logger.info(f'The directory for files from {url} exists')

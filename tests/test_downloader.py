@@ -48,7 +48,8 @@ def test_download(new_file, changed, requests_mock):
 
 @pytest.mark.parametrize('connection_error_excepted', [
     requests.HTTPError, requests.ConnectionError,
-    requests.URLRequired, requests.TooManyRedirects, requests.Timeout
+    requests.URLRequired, requests.TooManyRedirects, requests.Timeout,
+    PermissionError, FileNotFoundError
 ])
 def test_download_exceptions(connection_error_excepted, requests_mock):
     with pytest.raises(connection_error_excepted):
