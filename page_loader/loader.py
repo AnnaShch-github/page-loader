@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 from progress.bar import Bar
@@ -36,7 +37,10 @@ def download(url, output='os.getcwd'):
     links = links_for_dowloads(soup, url)
     bar = Bar('Processing', max=len(links), suffix='%(percent)d%%\n\n')
     for file_link, tag, atr in links:
-        link_for_file = f'{url}{file_link}'
+        logger.info(f'This is url: {url}')
+        #link_for_file = f'{url}{file_link}'
+        link_for_file = urljoin(url, file_link)
+        logger.info(f'The link should be different: {link_for_file}')
         image_bytes = get_files(link_for_file)
         if image_bytes is None:
             logger.debug('There is no data to main')
