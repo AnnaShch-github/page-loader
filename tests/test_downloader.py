@@ -9,10 +9,10 @@ from page_loader import download
 from page_loader.reader import read
 
 URL = 'https://ru.hexlet.io/courses'
-URL_CSS = 'https://ru.hexlet.io/courses/assets/application.css'
-URL_PNG = 'https://ru.hexlet.io/courses/assets/professions/nodejs.png'
-URL_HTML = 'https://ru.hexlet.io/courses/courses'
-URL_JS = 'https://ru.hexlet.io/courses/script.js'
+URL_CSS = 'https://ru.hexlet.io/assets/application.css'
+URL_PNG = 'https://ru.hexlet.io/assets/professions/nodejs.png'
+URL_HTML = 'https://ru.hexlet.io/courses'
+URL_JS = 'https://ru.hexlet.io/script.js'
 
 
 CREATED_JS = 'tests/fixtures/files/fixture.css'
