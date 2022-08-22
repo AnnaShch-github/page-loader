@@ -38,17 +38,17 @@ def download(url, output='os.getcwd'):
     bar = Bar('Processing', max=len(links), suffix='%(percent)d%%\n\n')
     for file_link, tag, atr in links:
         link_for_file = urljoin(url, file_link)
-        image_bytes = get_files(link_for_file)
-        if image_bytes is None:
+        files_bytes = get_files(link_for_file)
+        if files_bytes is None:
             logger.debug('There is no data to write')
         else:
             modified_file_name = modify_file_name(link_for_file)
             file_path = os.path.join(folder_for_files, modified_file_name)
-            write_to_file(file_path, image_bytes)
+            write_to_file(file_path, files_bytes)
             name_for_file = change_name_for_file(file_path)
             tag[atr] = name_for_file
         bar.next()
-    content = soup.prettify()
-    write_to_file(filepath, content)
+    soup_data = soup.prettify()
+    write_to_file(filepath, soup_data)
     logger.debug(f'The page {url} is saved')
     return filepath

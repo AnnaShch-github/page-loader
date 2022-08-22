@@ -11,4 +11,5 @@ project3/
 pyvenv.cfg
 .coverage
 coverage.xml
+page_loader/delete.py
 
