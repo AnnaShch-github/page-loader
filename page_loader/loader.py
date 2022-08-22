@@ -37,8 +37,6 @@ def download(url, output='os.getcwd'):
     links = links_for_dowloads(soup, url)
     bar = Bar('Processing', max=len(links), suffix='%(percent)d%%\n\n')
     for file_link, tag, atr in links:
-        logger.info(f'This is url: {url}')
-        #link_for_file = f'{url}{file_link}'
         link_for_file = urljoin(url, file_link)
         logger.info(f'The link should be different: {link_for_file}')
         image_bytes = get_files(link_for_file)
@@ -51,8 +49,9 @@ def download(url, output='os.getcwd'):
             name_for_file = change_name_for_file(file_name)
             tag[atr] = name_for_file
         bar.next()
-    soup.prettify()
-    content = str(soup)
+    #soup.prettify()
+    #content = str(soup)
+    content = soup.prettify()
     write_to_file(filepath, content)
     logger.debug(f'The page {url} is saved')
     return filepath
