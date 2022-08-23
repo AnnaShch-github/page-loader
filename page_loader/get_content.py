@@ -23,7 +23,7 @@ def get_page(url):
         logger.error('The request timed out.')
         raise requests.Timeout('The request timed out.')
     else:
-        data = response.content
+        data = response.text
         return data
 
 
