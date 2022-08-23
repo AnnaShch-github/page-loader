@@ -10,7 +10,7 @@ from page_loader.parsing import parse_cli_arguments
 
 
 def main():
-    # The main function of tha package
+    # The main function of tha library
     try:
         args = parse_cli_arguments()
         print(download(args.link, args.output))

@@ -14,7 +14,7 @@ from page_loader.write_to_file import write_to_file
 
 def download(url, output='os.getcwd'):
     """
-    Function loading a page from the link
+    Function loading a page and files from the link
     :param url: link to the website
     :param output: the name of the existing directory,
     current working directory by default
