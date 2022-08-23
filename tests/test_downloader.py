@@ -28,7 +28,7 @@ CREATED_PAGE = 'tests/fixtures/original.html'
 CREATED_DIR = 'ru-hexlet-io-courses_files'
 
 
-@pytest.mark.parametrize('new_file, changed', [(CHANGED_PAGE, CREATED_PAGE),
+@pytest.mark.parametrize('new_file, changed', [(CREATED_PAGE, CHANGED_PAGE),
                                                (CREATED_CSS, EXPECTED_CSS),
                                                (CREATED_PNG, EXPECTED_PNG),
                                                (CREATED_HTML, EXPECTED_HTML),
