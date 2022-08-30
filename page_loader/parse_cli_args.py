@@ -1,7 +1,7 @@
 import argparse
 
 
-def parse_cli_arguments():
+def parse_cli_args():
     # Parsing of the arguments
     parser = argparse.ArgumentParser(
         description='Download html page from a website'

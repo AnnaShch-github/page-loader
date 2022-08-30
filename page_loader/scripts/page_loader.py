@@ -4,32 +4,40 @@ import sys
 import requests
 
 from page_loader.loader import download
-from page_loader.logger import logger
 
-from page_loader.parsing import parse_cli_arguments
+from page_loader.parse_cli_args import parse_cli_args
 
 
 def main():
     # The main function of tha library
     try:
-        args = parse_cli_arguments()
+        args = parse_cli_args()
         print(download(args.link, args.output))
     except requests.HTTPError:
+        print('Sorry, an HTTP error has occurred. The program will be closed')
         sys.exit(1)
     except requests.ConnectionError:
+        print('Sorry, failed to establish a connection to the web site.'
+              ' Please check your internet connection.')
         sys.exit(1)
     except requests.URLRequired:
-        sys.exit(1)
+        print('Sorry, an URL error has occurred. The program will be closed')
     except requests.TooManyRedirects:
+        print('Sorry, too many redirects occurred. The program will be closed')
         sys.exit(1)
     except requests.Timeout:
+        print('Sorry, the server has not issued a response for timeout. '
+              'Please repeat.')
         sys.exit(1)
-    except FileNotFoundError:
-        logger.error('The system cannot find the path')
+    except FileNotFoundError as error:
+        print(f'The system cannot find the path: {error.filename}')
         sys.exit(1)
-    except PermissionError:
-        logger.error("Unfortunately, you don't have the permission")
+    except PermissionError as error2:
+        print(f"Sorry, you don't have the permission to {error2.filename}")
         sys.exit(1)
+    except Exception as error3:
+        print(f'Sorry, an error has occurred: {error3}. '
+              f'The program wil be closed.')
 
 
 if __name__ == '__main__':
