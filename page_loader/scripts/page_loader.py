@@ -40,9 +40,6 @@ def main():
     except PermissionError as e:
         logger.error(f"Sorry, you don't have the permission to {e.filename}")
         sys.exit(1)
-    except Exception as error2:
-        logger.error(f'Sorry, an URL error has occurred: {error2}'
-                     f'The program will be closed')
 
 
 if __name__ == '__main__':
