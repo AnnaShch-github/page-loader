@@ -37,9 +37,7 @@ def main():
     except PermissionError as error2:
         logger.error(f"Sorry, you don't have the permission to {error2.filename}")
         sys.exit(1)
-    except Exception as error3:
-        logger.error(f'Sorry, an error has occurred: {error3}. '
-              f'The program wil be closed.')
+
 
 
 if __name__ == '__main__':
