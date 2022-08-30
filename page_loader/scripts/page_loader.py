@@ -4,6 +4,7 @@ import sys
 import requests
 
 from page_loader.loader import download
+from page_loader.logger import logger
 
 from page_loader.parse_cli_args import parse_cli_args
 
@@ -14,29 +15,30 @@ def main():
         args = parse_cli_args()
         print(download(args.link, args.output))
     except requests.HTTPError:
-        print('Sorry, an HTTP error has occurred. The program will be closed')
+        logger.error('Sorry, an HTTP error has occurred. The program will be closed')
         sys.exit(1)
     except requests.ConnectionError:
-        print('Sorry, failed to establish a connection to the web site.'
+        logger.error('Sorry, failed to establish a connection to the web site.'
               ' Please check your internet connection.')
         sys.exit(1)
     except requests.URLRequired:
-        print('Sorry, an URL error has occurred. The program will be closed')
+        logger.error('Sorry, an URL error has occurred. The program will be closed')
+        sys.exit(1)
     except requests.TooManyRedirects:
-        print('Sorry, too many redirects occurred. The program will be closed')
+        logger.error('Sorry, too many redirects occurred. The program will be closed')
         sys.exit(1)
     except requests.Timeout:
-        print('Sorry, the server has not issued a response for timeout. '
+        logger.error('Sorry, the server has not issued a response for timeout. '
               'Please repeat.')
         sys.exit(1)
     except FileNotFoundError as error:
-        print(f'The system cannot find the path: {error.filename}')
+        logger.error(f'The system cannot find the path: {error.filename}')
         sys.exit(1)
     except PermissionError as error2:
-        print(f"Sorry, you don't have the permission to {error2.filename}")
+        logger.error(f"Sorry, you don't have the permission to {error2.filename}")
         sys.exit(1)
     except Exception as error3:
-        print(f'Sorry, an error has occurred: {error3}. '
+        logger.error(f'Sorry, an error has occurred: {error3}. '
               f'The program wil be closed.')
 
 
