@@ -1,21 +1,6 @@
-import os
-import re
 import requests
 
-
 from page_loader.logger import logger, logger_error
-from urllib.parse import urlparse
-
-
-def get_file_name(link):
-    first_step = urlparse(link)
-    second_step = ''.join([first_step.netloc, first_step.path])
-    file_name, extension = os.path.splitext(second_step)
-    re_file_name = re.sub(r'[^0-9a-zA-Z]', r'-', file_name)
-    if not extension:
-        extension = '.html'
-    result = ''.join([re_file_name, extension])
-    return result
 
 
 def get_content(url):
@@ -51,9 +36,3 @@ def write_to_file(filepath, data):
     with open(filepath, format_file, encoding=encoding) as page:
         page.write(data)
     logger.debug(f'The file {filepath} is downloaded')
-
-
-def read(file_path):
-    with open(file_path, 'rb') as f:
-        result = f.read()
-    return result

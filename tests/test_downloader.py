@@ -5,7 +5,6 @@ import requests
 
 
 from page_loader import download
-from page_loader.services import read
 
 URL = 'https://ru.hexlet.io'
 URL_CSS = 'https://ru.hexlet.io/assets/application.css'
@@ -16,19 +15,19 @@ URL_JS = 'https://ru.hexlet.io/script.js'
 
 CREATED_JS = 'tests/fixtures/files/fixture.js'
 EXPECTED_JS = 'tests/fixtures/files/fixture.js'
-NEW_JS = 'ru-hexlet_files/ru-hexlet-io-script.js'
+NEW_JS = 'ru-hexlet-io_files/ru-hexlet-io-script.js'
 CREATED_HTML = 'tests/fixtures/files/fixture.html'
 EXPECTED_HTML = 'tests/fixtures/files/fixture.html'
-NEW_HTML = 'ru-hexlet_files/ru-hexlet-io-courses.html'
+NEW_HTML = 'ru-hexlet-io_files/ru-hexlet-io-courses.html'
 CREATED_PNG = 'tests/fixtures/files/fixture.png'
 EXPECTED_PNG = 'tests/fixtures/files/fixture.png'
-NEW_PNG = 'ru-hexlet_files/ru-hexlet-io-assets-professions-nodejs.png'
+NEW_PNG = 'ru-hexlet-io_files/ru-hexlet-io-assets-professions-nodejs.png'
 CREATED_CSS = 'tests/fixtures/files/fixture.css'
 EXPECTED_CSS = 'tests/fixtures/files/fixture.css'
-NEW_CSS = 'ru-hexlet_files/ru-hexlet-io-assets-application.css'
+NEW_CSS = 'ru-hexlet-io_files/ru-hexlet-io-assets-application.css'
 CHANGED_PAGE = 'tests/fixtures/changed.html'
 CREATED_PAGE = 'tests/fixtures/original.html'
-CREATED_DIR = 'ru-hexlet_files'
+CREATED_DIR = 'ru-hexlet-io_files'
 
 
 @pytest.mark.parametrize('new_file, changed', [(NEW_CSS, EXPECTED_CSS),
@@ -58,3 +57,9 @@ def test_download_exceptions(connection_error_excepted, tmpdir, requests_mock):
     with pytest.raises(connection_error_excepted):
         requests_mock.get(URL, exc=connection_error_excepted)
         download(URL, tmpdir)
+
+
+def read(file_path):
+    with open(file_path, 'rb') as f:
+        result = f.read()
+    return result

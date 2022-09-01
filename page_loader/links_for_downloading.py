@@ -10,15 +10,12 @@ DICTIONARY = {
 
 def get_links_for_download(soup, url):
     list_of_links = []
-    for key in DICTIONARY.keys():
-        find_all = soup.find_all(key)
-        atr = DICTIONARY.get(key)
-        for link_to_download in find_all:
-            file_link = link_to_download.get(atr)
-            if is_same_domain(url, file_link):
-                list_of_links.append((file_link, link_to_download, atr))
-            else:
-                continue
+    find_all = soup.find_all(DICTIONARY.keys())
+    for tag in find_all:
+        atr = DICTIONARY.get(tag.name)
+        file_link = tag.get(atr)
+        if is_same_domain(url, file_link):
+            list_of_links.append((file_link, tag, atr))
     return list_of_links
 
 

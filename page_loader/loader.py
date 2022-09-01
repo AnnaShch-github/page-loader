@@ -5,8 +5,9 @@ from bs4 import BeautifulSoup
 from progress.bar import Bar
 
 from page_loader.links_for_downloading import get_links_for_download
-from page_loader.logger import logger
-from page_loader.services import write_to_file, get_content, get_file_name
+from page_loader.logger import logger, logger_error
+from page_loader.names_formatter import get_file_name, get_page_name
+from page_loader.content_loader import write_to_file, get_content
 
 
 def download(url, output):
@@ -17,17 +18,18 @@ def download(url, output):
     current working directory by default
     :return: path to new file
     """
+    if not os.path.exists(output):
+        logger_error.error(f'Sorry, the directory {output} does not exist.')
+        raise IOError(f'Sorry, the directory {output} does not exist.')
     data = get_content(url)
-    page_name = get_file_name(url)
-    directory = output
-    folder_name, extension = os.path.splitext(page_name)
-    folder_for_files = f'{directory}/{folder_name}_files'
+    page_name, folder_name = get_page_name(url)
+    folder_for_files = os.path.join(output, folder_name)
     if not os.path.isdir(folder_for_files):
         os.mkdir(folder_for_files)
         logger.info(f'The directory for files from {url} is created')
     else:
         logger.info(f'The directory for files from {url} exists')
-    page_path = os.path.join(directory, page_name)
+    page_path = os.path.join(output, page_name)
     soup = BeautifulSoup(data, 'html.parser')
     links = get_links_for_download(soup, url)
     bar = Bar('Processing', max=len(links), suffix='%(percent)d%%\n\n')
