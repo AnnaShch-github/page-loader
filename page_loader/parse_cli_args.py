@@ -1,4 +1,5 @@
 import argparse
+import os
 
 
 def parse_cli_args():
@@ -11,6 +12,6 @@ def parse_cli_args():
                         type=str)
     parser.add_argument('-o', '--output',
                         help='The directory where the page is downloaded',
-                        default='os.getcwd')
+                        default=os.getcwd())
     args = parser.parse_args()
     return args

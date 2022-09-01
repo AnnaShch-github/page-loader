@@ -9,7 +9,7 @@ from page_loader.logger import logger
 from page_loader.services import write_to_file, get_content, get_file_name
 
 
-def download(url, output='os.getcwd'):
+def download(url, output):
     """
     Function loading a page and files from the link
     :param url: link to the website
@@ -19,13 +19,7 @@ def download(url, output='os.getcwd'):
     """
     data = get_content(url)
     page_name = get_file_name(url)
-    if output == 'os.getcwd':
-        if os.path.exists(os.path.abspath(output)):
-            directory = 'os.getcwd'
-        else:
-            directory = os.getcwd()
-    else:
-        directory = output
+    directory = output
     folder_name, extension = os.path.splitext(page_name)
     folder_for_files = f'{directory}/{folder_name}_files'
     if not os.path.isdir(folder_for_files):
