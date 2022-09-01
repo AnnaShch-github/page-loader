@@ -3,7 +3,7 @@ import re
 import requests
 
 
-from page_loader.logger import logger
+from page_loader.logger import logger, logger_error
 from urllib.parse import urlparse
 
 
@@ -23,19 +23,19 @@ def get_content(url):
         response = requests.get(url)
         response.raise_for_status()
     except requests.HTTPError as http_error:
-        logger.error(http_error)
+        logger_error.error(http_error)
         raise requests.HTTPError(http_error)
     except requests.ConnectionError as connection_error:
-        logger.error(connection_error)
+        logger_error.error(connection_error)
         raise requests.ConnectionError(connection_error)
     except requests.URLRequired as url_error:
-        logger.error(url_error)
+        logger_error.error(url_error)
         raise requests.URLRequired(url_error)
     except requests.TooManyRedirects as redirects_error:
-        logger.error(redirects_error)
+        logger_error.error(redirects_error)
         raise requests.TooManyRedirects(redirects_error)
     except requests.Timeout as timeout_error:
-        logger.error(timeout_error)
+        logger_error.error(timeout_error)
         raise requests.Timeout(timeout_error)
     else:
         data = response.content
