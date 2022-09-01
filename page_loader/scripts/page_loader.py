@@ -39,6 +39,10 @@ def main():
     except PermissionError as e:
         print(f"Sorry, you don't have the permission to {e.filename}")
         sys.exit(1)
+    except Exception as exception:
+        print(f'Sorry, an error has occurred: {exception}.'
+              'The program will be closed')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
