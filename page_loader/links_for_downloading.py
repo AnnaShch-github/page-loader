@@ -1,5 +1,5 @@
 from urllib.parse import urlparse
-from typing import Any
+from typing import List, Tuple, Any
 
 DICTIONARY = {
     'img': 'src',
@@ -8,7 +8,7 @@ DICTIONARY = {
 }
 
 
-def get_sources_for_download(soup, url) -> list[tuple[Any, Any, str | None]]:
+def get_sources_for_download(soup, url) -> List[Tuple[Any, Any, str | None]]:
     links = []
     find_all = soup.find_all(DICTIONARY.keys())
     for tag in find_all:
