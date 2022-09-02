@@ -28,7 +28,7 @@ def download(url, output):
         os.mkdir(folder_for_files)
         logger.info(f'The directory for files from {url} is created')
     else:
-        logger.info(f'The directory for files from {url} exists')
+        logger.info(f'The directory for files from {url} exists.')
     page_path = os.path.join(output, page_name)
     soup = BeautifulSoup(data, 'html.parser')
     list_of_sources = get_sources_for_download(soup, url)
