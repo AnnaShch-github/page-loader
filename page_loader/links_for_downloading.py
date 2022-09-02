@@ -9,14 +9,14 @@ DICTIONARY = {
 
 
 def get_links_for_download(soup, url):
-    list_of_links = []
+    links = []
     find_all = soup.find_all(DICTIONARY.keys())
     for tag in find_all:
         atr = DICTIONARY.get(tag.name)
         file_link = tag.get(atr)
         if is_same_domain(url, file_link):
-            list_of_links.append((file_link, tag, atr))
-    return list_of_links
+            links.append((file_link, tag, atr))
+    return links
 
 
 def is_same_domain(url, link):
@@ -24,7 +24,4 @@ def is_same_domain(url, link):
         return False
     link_netloc = urlparse(link).netloc
     url_netloc = urlparse(url).netloc
-    if link_netloc == url_netloc or not link_netloc:
-        return True
-    else:
-        return False
+    return link_netloc == url_netloc or not link_netloc
