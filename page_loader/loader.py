@@ -42,8 +42,8 @@ def download(url, output):
             file_name = get_file_name(link_for_file)
             file_path = os.path.join(folder_for_files, file_name)
             write_to_file(file_path, files_bytes)
-            changed_data = '/'.join(file_path.split('/')[-2:])
-            tag[atr] = changed_data
+            changed_atr = os.path.relpath(file_path, output)
+            tag[atr] = changed_atr
         bar.next()
     soup_data = soup.prettify()
     write_to_file(page_path, soup_data)
