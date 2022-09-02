@@ -8,7 +8,7 @@ DICTIONARY = {
 }
 
 
-def get_links_for_download(soup, url):
+def get_sources_for_download(soup, url):
     links = []
     find_all = soup.find_all(DICTIONARY.keys())
     for tag in find_all:
