@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from progress.bar import Bar
 
-from page_loader.links_for_downloading import get_sources_for_download
+from page_loader.links_for_downloading import list_sources
 from page_loader.logger import logger, logger_error
 from page_loader.names_formatter import get_file_name, get_page_name
 from page_loader.content_loader import write_to_file, get_content
@@ -31,7 +31,7 @@ def download(url, output):
         logger.info(f'The directory for files from {url} exists.')
     page_path = os.path.join(output, page_name)
     soup = BeautifulSoup(data, 'html.parser')
-    list_of_sources = get_sources_for_download(soup, url)
+    list_of_sources = list_sources(soup, url)
     bar = Bar('Processing', max=len(list_of_sources),
               suffix='%(percent)d%%\n\n')
     for file_link, tag, atr in list_of_sources:
