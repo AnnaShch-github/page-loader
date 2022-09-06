@@ -14,9 +14,8 @@ def get_content(url):
             requests.Timeout) as error:
         logger_error.error(error)
         raise error
-    else:
-        data = response.content
-        return data
+    data = response.content
+    return data
 
 
 def write_to_file(filepath, data):

@@ -35,8 +35,7 @@ jobs:
           make install
       - name: make lint
         run: make lint
-  coverage:
-    needs: [test-job]
+  test-coverage:
     runs-on: ubuntu-latest
     strategy:
       matrix:

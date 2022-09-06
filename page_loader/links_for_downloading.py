@@ -8,7 +8,7 @@ DICTIONARY = {
 }
 
 
-def list_sources(soup: object, url: Any) -> List[Tuple[Any, Any, str]]:
+def get_sources(soup: object, url: Any) -> List[Tuple[Any, Any, str]]:
     links = []
     find_all = soup.find_all(DICTIONARY.keys())
     for tag in find_all:
