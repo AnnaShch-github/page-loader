@@ -10,7 +10,7 @@
 
 ### Welcome to my third training project 'Page Loader'
 This is the third training project for Python Developer Course from [Hexlet](https://ru.hexlet.io/programs/python).
-This library allows to main a web pages including files from the page.
+This library allows to download a web pages including files from the page.
 
 #### To install the library:
 python -m pip install git+https://github.com/AnnaCanada/python-project-lvl3
